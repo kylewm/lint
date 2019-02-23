@@ -740,6 +740,16 @@ func lintName(name string) (should string) {
 		} else if unicode.IsLower(runes[i]) && !unicode.IsLower(runes[i+1]) {
 			// lower->non-lower
 			eow = true
+		} else if i > w+1 && unicode.IsUpper(runes[i-1]) && !unicode.IsUpper(runes[i]) {
+			// upper->non-upper, and not the second letter in a word
+			if unicode.IsLower(runes[i]) {
+				// second character of a camel-case word, back up to the first
+				i -= 2
+			} else {
+				// first character of a non-word number
+				i--
+			}
+			eow = true
 		}
 		i++
 		if !eow {
@@ -752,6 +762,9 @@ func lintName(name string) (should string) {
 			// Keep consistent case, which is lowercase only at the start.
 			if w == 0 && unicode.IsLower(runes[w]) {
 				u = strings.ToLower(u)
+			} else {
+				// NOTE(kylewm): We prefers initialisms to be title case, diverging from the go standard.
+				u = u[:1] + strings.ToLower(u[1:])
 			}
 			// All the common initialisms are ASCII,
 			// so we can replace the bytes exactly.

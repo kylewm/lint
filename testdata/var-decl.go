@@ -42,10 +42,10 @@ const num = 123
 var flags uint32 = num
 
 // No warnings because the RHS is an ideal int, and the LHS is a different int type.
-var userID int64 = 1235
-var negID int64 = -1
-var parenID int64 = (17)
-var crazyID int64 = -(-(-(-9)))
+var userId int64 = 1235
+var negId int64 = -1
+var parenId int64 = (17)
+var crazyId int64 = -(-(-(-9)))
 
 // Same, but for strings and floats.
 type stringT string

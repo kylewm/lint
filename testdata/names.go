@@ -16,16 +16,16 @@ var var_name int // MATCH /underscore.*var.*var_name/
 
 type t_wow struct { // MATCH /underscore.*type.*t_wow/
 	x_damn int      // MATCH /underscore.*field.*x_damn/
-	Url    *url.URL // MATCH /struct field.*Url.*URL/
+	URL    *url.URL // MATCH /struct field.*URL.*Url/
 }
 
-const fooId = "blah" // MATCH /fooId.*fooID/
+const fooID = "blah" // MATCH /fooID.*fooId/
 
 func f_it() { // MATCH /underscore.*func.*f_it/
 	more_underscore := 4 // MATCH /underscore.*var.*more_underscore/
 	_ = more_underscore
 	var err error
-	if isEof := (err == io.EOF); isEof { // MATCH /var.*isEof.*isEOF/
+	if isEof := (err == io.EOF); isEof { // should be okay
 		more_underscore = 7 // should be okay
 	}
 
@@ -33,23 +33,23 @@ func f_it() { // MATCH /underscore.*func.*f_it/
 	_ = x
 
 	var ips []net.IP
-	for _, theIp := range ips { // MATCH /range var.*theIp.*theIP/
+	for _, theIp := range ips { // should be okay
 		_ = theIp
 	}
 
-	switch myJson := g(); { // MATCH /var.*myJson.*myJSON/
+	switch myJson := g(); { // should be okay
 	default:
 		_ = myJson
 	}
 	var y net_http.ResponseWriter // an interface
-	switch tApi := y.(type) {     // MATCH /var.*tApi.*tAPI/
+	switch tApi := y.(type) {     // should be okay
 	default:
 		_ = tApi
 	}
 
 	var c chan int
 	select {
-	case qId := <-c: // MATCH /var.*qId.*qID/
+	case qId := <-c: // should be okay
 		_ = qId
 	}
 }
@@ -59,7 +59,7 @@ const (
 	CPP_CONST   = 1 // MATCH /ALL_CAPS.*CamelCase/
 	kLeadingKay = 2 // MATCH /k.*leadingKay/
 
-	HTML    = 3 // okay; no underscore
+	HTML    = 3 // MATCH /HTML.*Html/
 	X509B   = 4 // ditto
 	V1_10_5 = 5 // okay; fewer than two uppercase letters
 )
